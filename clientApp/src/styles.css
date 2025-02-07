@@ -1,9 +1,0 @@
-input, label, select, p, h1, a, h4{
-    font-family: 'Gill Sans MT';
-    
-}
-input, label, select, p, input::placeholder, h4{
-    font-family: 'Gill Sans MT';
-    font-size: 15px;
-    
-}
