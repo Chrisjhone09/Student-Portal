@@ -1,0 +1,294 @@
+﻿@model serverSide.ViewModel.StudentCourseView
+
+@{
+	ViewData["Title"] = "Details";
+}
+<style>
+	h4 {
+		align-self: center;
+	}
+
+	.table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	th, td {
+		text-align: center;
+		padding: 12px;
+		border: 1px solid #ddd;
+	}
+
+	th {
+		background-color: #007bff;
+		color: white;
+	}
+
+	tbody tr:hover {
+		background-color: #f5f5f5;
+	}
+	.subjects-container {
+		display: flex;
+		gap: 30px;
+		flex-direction: column;
+	}
+</style>
+<h1>Details</h1>
+
+<div>
+	<h4>Student</h4>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Student!.Firstname)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Student!.Firstname)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Student!.Middlename)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Student!.Middlename)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Student!.Lastname)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Student!.Lastname)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Student!.Status)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Student!.Status)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Student!.Section)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Student!.Section.SectionId)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Department)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Department.DepartmentId)
+		</dd>
+	</dl>
+</div>
+<div>
+	<a asp-action="Edit" asp-route-id="@Model?.StudentId">Edit</a> |
+	<a asp-action="Index">Back to List</a>
+</div>
+<hr />
+<div class="subjects-container">
+	<h3>Fisrt Year</h3>
+	<div style="display: flex; gap: 20px;">
+		<table class="table">
+			<thead>
+				<tr>
+					<th colspan="6"><h4>1st Semester</h4> </th>
+				</tr>
+				<tr>
+					<th>Course Code</th>
+					<th>Course Title</th>
+					<th>Prelim</th>
+					<th>Midterm</th>
+					<th>Final</th>
+					<th>GPA</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var sub in Model.ListOfCourses.Where(c => c.Year == 1 && c.Semester == 1))
+				{
+					<tr>
+						<td>@sub.CourseCode</td>
+						<td>@sub.CourseTitle</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<table class="table">
+			<thead>
+				<tr>
+					<th colspan="6"><h4>2nd Semester</h4></th>
+				</tr>
+				<tr>
+					<th>Course Code</th>
+					<th>Course Title</th>
+					<th>Prelim</th>
+					<th>Midterm</th>
+					<th>Final</th>
+					<th>GPA</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var sub in Model.ListOfCourses.Where(c => c.Year == 1 && c.Semester == 2))
+				{
+					<tr>
+						<td>@sub.CourseCode</td>
+						<td>@sub.CourseTitle</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+	<h3>Second Year</h3>
+	<div style="display: flex; gap: 20px;">
+		<table class="table">
+			<thead>
+				<tr>
+					<th colspan="6"><h4>1st Semester</h4> </th>
+				</tr>
+				<tr>
+					<th>Course Code</th>
+					<th>Course Title</th>
+					<th>Prelim</th>
+					<th>Midterm</th>
+					<th>Final</th>
+					<th>GPA</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var sub in Model.ListOfCourses.Where(c => c.Year == 2 && c.Semester == 1))
+				{
+					<tr>
+						<td>@sub.CourseCode</td>
+						<td>@sub.CourseTitle</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<table class="table">
+			<thead>
+				<tr>
+					<th colspan="6"><h4>2nd Semester</h4></th>
+				</tr>
+				<tr>
+					<th>Course Code</th>
+					<th>Course Title</th>
+					<th>Prelim</th>
+					<th>Midterm</th>
+					<th>Final</th>
+					<th>GPA</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var sub in Model.ListOfCourses.Where(c => c.Year == 2 && c.Semester == 2))
+				{
+					<tr>
+						<td>@sub.CourseCode</td>
+						<td>@sub.CourseTitle</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+
+	</div>
+	<h3>Third Year</h3>
+	<div style="display: flex; gap: 20px;">
+		<table class="table">
+			<thead>
+				<tr>
+					<th colspan="6"><h4>1st Semester</h4> </th>
+				</tr>
+				<tr>
+					<th>Course Code</th>
+					<th>Course Title</th>
+					<th>Prelim</th>
+					<th>Midterm</th>
+					<th>Final</th>
+					<th>GPA</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var sub in Model.ListOfCourses.Where(c => c.Year == 3 && c.Semester == 1))
+				{
+					<tr>
+						<td>@sub.CourseCode</td>
+						<td>@sub.CourseTitle</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<table class="table">
+			<thead>
+				<tr>
+					<th colspan="6"><h4>2nd Semester</h4></th>
+				</tr>
+				<tr>
+					<th>Course Code</th>
+					<th>Course Title</th>
+					<th>Prelim</th>
+					<th>Midterm</th>
+					<th>Final</th>
+					<th>GPA</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var sub in Model.ListOfCourses.Where(c => c.Year == 3 && c.Semester == 2))
+				{
+					<tr>
+						<td>@sub.CourseCode</td>
+						<td>@sub.CourseTitle</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+	<h3>Fourth Year</h3>
+	<div style="display: flex; gap: 20px;">
+		<table class="table">
+			<thead>
+				<tr>
+					<th colspan="6"><h4>1st Semester</h4> </th>
+				</tr>
+				<tr>
+					<th>Course Code</th>
+					<th>Course Title</th>
+					<th>Prelim</th>
+					<th>Midterm</th>
+					<th>Final</th>
+					<th>GPA</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				@foreach (var sub in Model.ListOfCourses.Where(c => c.Year == 4 && c.Semester == 1))
+				{
+					<tr>
+						<td>@sub.CourseCode</td>
+						<td>@sub.CourseTitle</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<table class="table">
+			<thead>
+				<tr>
+					<th colspan="6"><h4>2nd Semester</h4></th>
+				</tr>
+				<tr>
+					<th>Course Code</th>
+					<th>Course Title</th>
+					<th>Prelim</th>
+					<th>Midterm</th>
+					<th>Final</th>
+					<th>GPA</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var sub in Model.ListOfCourses.Where(c => c.Year == 4 && c.Semester == 2))
+				{
+					<tr>
+						<td>@sub.CourseCode</td>
+						<td>@sub.CourseTitle</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+	
+</div>
+

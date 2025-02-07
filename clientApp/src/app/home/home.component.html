@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="side-bar">
+        <div class="image">
+            <h1>User</h1>
+        </div>
+        <a routerLink="announcements" routerLinkActive="active">Announcements</a>
+        <a routerLink="classSchedule" routerLinkActive="active">Class Schedule</a>
+        <a routerLink="grades"routerLinkActive="active">Grades</a>
+        <a routerLink="facultyEvaluation" routerLinkActive="active">Faculty Evalution</a>
+        <button (click)="logout()" *ngIf="service.isLoggedIn">Logout</button>
+    
+    </div>
+    <div class="router-container">
+        <router-outlet></router-outlet>
+    </div>
+</div>

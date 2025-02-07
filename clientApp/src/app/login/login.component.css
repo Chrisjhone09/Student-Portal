@@ -1,0 +1,149 @@
+.container {
+  box-shadow: 0 0px 90px rgb(143, 7, 148);
+  height: 40rem;
+  width: 70rem;
+  display: flex;
+}
+
+.login-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  background-color: #771771;
+}
+
+label {
+  font-size: large;
+  align-self: flex-start;
+  color: white;
+}
+
+a {
+  color: white;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 40%;
+  gap: 10px;
+}
+
+.image-container {
+  width: 50%;
+  ;
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.text,
+title {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.image {
+  height: 70%;
+  justify-content: center;
+  display: flex;
+  margin-top: 0;
+}
+
+input {
+  width: 240px;
+  height: 120px;
+  line-height: 30px;
+  padding: 0 5rem;
+  padding-left: 3rem;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  outline: none;
+  background-color: #ffffff;
+  color: #0d0c22;
+  transition: .5s ease;
+}
+
+.group {
+  display: flex;
+  line-height: 30px;
+  align-items: center;
+  position: relative;
+  max-width: 200px;
+}
+
+.input::placeholder {
+  color: #94a3b8;
+}
+
+input:focus,
+input:hover {
+  outline: none;
+  border-color: rgb(143, 7, 148);
+  background-color: #fff;
+  box-shadow: 0 0 0 5px rgb(129 140 248 / 30%);
+}
+
+#cdkLogo {
+  height: 100px;
+}
+
+.registerLink {
+  background-color: transparent;
+  border: 0;
+  color: white;
+  text-decoration: underline;
+  font-style: italic;
+}
+
+.button-submit {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-weight: bold;
+  width: 9rem;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 10px
+}
+
+.link {
+  display: flex;
+  justify-content: end;
+}
+
+.register-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  background-color: rgb(150, 54, 153);
+}
+.main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

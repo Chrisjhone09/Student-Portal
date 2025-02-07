@@ -1,0 +1,63 @@
+﻿@model serverSide.Models.Section
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div>
+    <h1>@Model.SectionName</h1>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SectionObj.SectionName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SectionObj.SectionName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SectionObj.StudentCount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SectionObj.StudentCount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SectionObj.Course)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SectionObj.Course!.CourseCode)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SectionObj.Department)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SectionObj.Department!.DepartmentId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.SectionId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+<hr />
+<div>
+    <h4>List Of Students</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>StudentID</th>
+                <th>Student Name</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var stud in Model.ListOfStudents) {
+                <tr>
+                    <td>@stud.StudentId</td>
+                    <td>@stud.Firstname @stud.Lastname</td>
+                    <td>@stud.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
