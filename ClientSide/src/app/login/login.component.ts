@@ -23,16 +23,7 @@ export class LoginComponent {
   }
 
   login(){
-    this.service.login(this.user).subscribe({
-      next: (response) => {
-        localStorage.setItem('token', response.token)
-        localStorage.setItem('student', JSON.stringify(response));
-        this.route.navigate(['/home']);
-      },
-      error: (err) => {
-        console.log(err.message)
-      }
-    });
+    this.service.login(this.user)
   }
 
 }

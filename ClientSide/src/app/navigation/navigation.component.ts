@@ -19,13 +19,7 @@ export class NavigationComponent {
     } else this.isClicked = false
   }
   logout() {
-    this.service.logout().subscribe({
-      next: (success) => {
-        localStorage.removeItem('token');
-        console.log("User has logged out");
-        this.route.navigate(['/login']);
-      }, error: (error) => { console.log(error) }
-    })
+    this.service.logout()
   }
 
 }

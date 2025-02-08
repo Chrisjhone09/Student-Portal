@@ -10,16 +10,20 @@ import { AuthService } from '../auth.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  constructor(public service : AuthService) {}
+  
   student : any;
-  ngOnInit () {
-    const studentData = localStorage.getItem('student'); // Retrieve the data from localStorage
-
-    if (studentData) {
-      this.student = JSON.parse(studentData); // Parse the data if it's not null
-      console.log('Student:', this.student); // Access and use the parsed data
-    } else {
-      console.error('No student data found in localStorage'); // Handle the null case
-    }
+  constructor(private authService: AuthService) {
   }
+  ngOnInit(): void {
+    this.authService.user$.subscribe({
+      next: (user) => {
+        console.log('Fetched student data:', user); // Add this log
+        this.student = user;
+      },
+      error: (err) => {
+        console.error('Error fetching user data:', err);
+      }
+    });
+  }
+  
 }
