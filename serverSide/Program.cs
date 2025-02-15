@@ -20,9 +20,9 @@ namespace serverSide
 
             builder.Services.AddDbContext<CDKDbContext>(options =>
            options.UseSqlServer(builder.Configuration.GetConnectionString("Connection2")));
-            builder.Services.AddControllersWithViews(); 
+            builder.Services.AddControllersWithViews();
             builder.Services.AddControllers();
-         
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -48,18 +48,28 @@ namespace serverSide
             .AddDefaultTokenProviders();
 
             var secretKey = builder.Configuration["Jwt:Key"];
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }
+
+            ).AddJwtBearer(options =>
                 {
+                    options.RequireHttpsMetadata = false; // Set to true in production
+                    options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                        ValidIssuer = "https://localhost:7095", // Make sure this matches the token issuer
+                        ValidAudience = "https://localhost:4200", // Make sure this matches the expected audience
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)) // Must match the token's signing key
                     };
                 });
+
 
             builder.Services.AddOpenApi();
 

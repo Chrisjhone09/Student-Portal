@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { DataService } from '../data.service';
+import { Schedule } from '../models/schedule';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +12,9 @@ import { AuthService } from '../auth.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  
+  schedule = new Schedule()
   student : any;
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private data : DataService) {
   }
   ngOnInit(): void {
     this.authService.user$.subscribe({
@@ -24,6 +26,12 @@ export class HomeComponent implements OnInit {
         console.error('Error fetching user data:', err);
       }
     });
+
+    this.data.getHomeData().subscribe ( {
+      next : (response) => {
+        this.schedule = response as Schedule
+      }
+    })
   }
   
 }

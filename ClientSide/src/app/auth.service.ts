@@ -44,7 +44,7 @@ export class AuthService {
           if(response.firstname == "Chris Jhone") {
             this.route.navigate(["/portal"])
           }
-          this.route.navigate(['/home']);
+          this.route.navigate(['/portal']);
         } else {
           console.error("Invalid response format from API");
         }

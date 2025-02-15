@@ -250,6 +250,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "serverSide.Controllers.PortalController",
+    "Method": "GetStudentProfile",
+    "RelativePath": "api/portal",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "server.Controllers.RegisterController",
     "Method": "Register",
     "RelativePath": "api/Register",

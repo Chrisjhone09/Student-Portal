@@ -12,6 +12,7 @@ namespace server.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly CDKDbContext _dbContext;
+        
 
         public RegisterController(UserManager<User> userManager, CDKDbContext context)
         {
@@ -25,11 +26,7 @@ namespace server.Controllers
             var isStudentEnrolled = _dbContext.Students.Any(s=> s.StudentId == model.StudentId);
             if (model == null)
                 return BadRequest("Invalid user data.");
-            Console.Write(_dbContext.Students.Find(model.StudentId).StudentId);
-            //if(_dbContext.Students.Any(s => s.StudentId == model.StudentId == false))
-            //{
-            //    return BadRequest($"Student with ID {model.StudentId} does not exist");
-            //}
+           
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -55,7 +52,25 @@ namespace server.Controllers
 
                 if (result.Succeeded)
                 {
-                    return Ok(new { message = "Registration successful." });
+                    var portalId = user.Id;
+
+                    var getExistingStudent = _dbContext.Students.FirstOrDefault(s => s.StudentId == model.StudentId);
+                    if (getExistingStudent != null)
+                    {
+                        // Assign the PortalId to the student
+                        getExistingStudent.PortalId = portalId;
+
+                        // Update the student record in the database
+                        _dbContext.Students.Update(getExistingStudent);
+                        await _dbContext.SaveChangesAsync();
+
+                        return Ok(new { message = "Registration successful." });
+                    }
+                    else
+                    {
+                        // If the student record is not found, handle the error
+                        return BadRequest(new { message = "Student record not found." });
+                    }
                 }
             }
             

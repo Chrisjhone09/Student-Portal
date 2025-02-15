@@ -47,7 +47,7 @@ namespace server.Controllers
             if (string.IsNullOrEmpty(secretKey))
                 return StatusCode(500, "JWT secret key is not configured.");
 
-            var token = JwtTokenGenerator.GenerateToken(user.Email, secretKey, 30);
+            var token = JwtTokenGenerator.GenerateToken(user.Email, secretKey, 30, user.Id);
 
             var student = new User
             {

@@ -349,3 +349,4 @@ C:\Users\USER\Personal Project\serverSide\obj\Debug\net9.0\scopedcss\projectbund
 C:\Users\USER\Personal Project\serverSide\obj\Debug\net9.0\compressed\jvzxetmadu-eaq64b9tbx.gz
 C:\Users\USER\Personal Project\serverSide\obj\Debug\net9.0\compressed\xaboo8gpio-eaq64b9tbx.gz
 C:\Users\USER\Personal Project\serverSide\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\USER\Personal Project\serverSide\obj\Debug\net9.0\serverSide.sourcelink.json

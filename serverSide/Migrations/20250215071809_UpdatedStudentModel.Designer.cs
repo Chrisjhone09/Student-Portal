@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using serverSide.Data;
 
@@ -11,9 +12,11 @@ using serverSide.Data;
 namespace serverSide.Migrations
 {
     [DbContext(typeof(CDKDbContext))]
-    partial class CDKDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250215071809_UpdatedStudentModel")]
+    partial class UpdatedStudentModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

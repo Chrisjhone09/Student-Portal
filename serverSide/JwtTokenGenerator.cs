@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using serverSide.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -7,14 +8,23 @@ namespace server
 {
     public class JwtTokenGenerator
     {
-        public static string GenerateToken(string username, string secretKey, int expirationMinutes)
+        public static string GenerateToken(string username, string secretKey, int expirationMinutes, string userId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(secretKey);
 
+            var claims = new List<Claim>
+            {
+                 new Claim(JwtRegisteredClaimNames.Sub, userId),
+                 new Claim(JwtRegisteredClaimNames.UniqueName, username),
+                 new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
+            };
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, username) }),
+                Issuer = "https://localhost:7095",
+                Audience = "https://localhost:4200",
+                Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddMinutes(expirationMinutes),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
