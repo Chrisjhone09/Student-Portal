@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserRegister } from './models/user-register';
-import { LoginModel } from './models/login-model';
+import { UserRegister } from '../models/user-register';
+import { LoginModel } from '../models/login-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -30,10 +30,10 @@ export class AuthService {
   
 
   register(user: UserRegister) {
-    return this.http.post<any>(this.api + '/register', user);
+    return this.http.post<any>(this.api + '/account/register', user);
   }
   login(user: LoginModel) {
-    this.http.post<any>(this.api + "/login", user).subscribe({
+    this.http.post<any>(this.api + "/account/login", user).subscribe({
       next: (response) => {
         console.log("API Response:", response); 
         if (response && response.token) { 
@@ -56,7 +56,7 @@ export class AuthService {
   }
   logout() {
     this.isLoggedin = false;
-    this.http.post(this.api + '/logout', {}, {
+    this.http.post(this.api + '/account/logout', {}, {
       withCredentials: true,
       observe: 'response',
       responseType: 'text',

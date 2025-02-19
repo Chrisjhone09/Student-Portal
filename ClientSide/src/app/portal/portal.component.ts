@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FooterComponent } from "../footer/footer.component";
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { Schedule } from '../models/schedule';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-portal',
-  imports: [FooterComponent, CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './portal.component.html',
   styleUrl: './portal.component.css'
 })
 export class PortalComponent implements OnInit {
-  schedule :Schedule[] = []
+  schedule : Schedule[] = []
   student : any;
 constructor(private service : AuthService, private data : DataService) {}
   ngOnInit(): void {

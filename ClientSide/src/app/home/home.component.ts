@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { DataService } from '../data.service';
+import { AuthService } from '../services/auth.service';
+import { DataService } from '../services/data.service';
 import { Schedule } from '../models/schedule';
 
 @Component({

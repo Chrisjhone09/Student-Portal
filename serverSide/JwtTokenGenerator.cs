@@ -1,4 +1,6 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using serverSide.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -8,15 +10,17 @@ namespace server
 {
     public class JwtTokenGenerator
     {
-        public static string GenerateToken(string username, string secretKey, int expirationMinutes, string userId)
+        
+        public static string GenerateToken(User user,string role, string secretKey, int expirationMinutes)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(secretKey);
 
+
             var claims = new List<Claim>
-            {
-                 new Claim(JwtRegisteredClaimNames.Sub, userId),
-                 new Claim(JwtRegisteredClaimNames.UniqueName, username),
+            { 
+                //new Claim(ClaimTypes.Role, role),
+                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                  new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
             };
 

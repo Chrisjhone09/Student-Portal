@@ -24,7 +24,6 @@ namespace serverSide.Models
 
 
 
-
         [NotMapped]
         public List<Course> ListOfCoures { get; set; } = new List<Course>();
         [NotMapped]

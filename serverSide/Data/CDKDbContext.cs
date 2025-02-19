@@ -12,11 +12,16 @@ namespace serverSide.Data
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<StudentCourse> StudentCourses { get; set; }
+        public DbSet<serverSide.Models.Department> Department { get; set; } = default!;
+        public DbSet<serverSide.Models.Section> Section { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<StudentCourse>()
          .HasKey(sc => new { sc.StudentId, sc.CourseId, sc.ScheduleId, sc.SectionId, sc.InstructorId });
+
+            modelBuilder.Entity<StudentInstructorEvaluation>()
+                .HasKey(sie => new { sie.StudentId, sie.InstructorId, sie.EvaluationId });
 
             modelBuilder.Entity<StudentCourse>()
                 .HasOne(sc => sc.Student)
@@ -96,8 +101,19 @@ namespace serverSide.Data
                 .HasForeignKey(s => s.CourseId);
             modelBuilder.Entity<Section>()
                 .Property(c => c.StudentCount).HasDefaultValue(0);
-        }   
-        public DbSet<serverSide.Models.Department> Department { get; set; } = default!;
-        public DbSet<serverSide.Models.Section> Section { get; set; } = default!;
+
+
+            //Student's Evaluation
+            modelBuilder.Entity<Student>()
+                .HasMany(s => s.Evaluations)
+                .WithOne(sie => sie.Student)
+                .HasForeignKey(sie => sie.StudentId).OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Instructor>()
+                .HasMany(i => i.Evaluations)
+                .WithOne(sie => sie.Instructor)
+                .HasForeignKey(sie => sie.InstructorId).OnDelete(DeleteBehavior.Restrict);
+        }
+
     }
 }

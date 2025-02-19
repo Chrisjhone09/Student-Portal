@@ -91,6 +91,29 @@ namespace serverSide.Migrations
                     b.ToTable("Department");
                 });
 
+            modelBuilder.Entity("serverSide.Models.Evaluation", b =>
+                {
+                    b.Property<Guid>("EvaluationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Feedback")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Rating")
+                        .HasColumnType("decimal(2, 1)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EvaluationId");
+
+                    b.ToTable("Evaluation");
+                });
+
             modelBuilder.Entity("serverSide.Models.Instructor", b =>
                 {
                     b.Property<int>("InstructorId")
@@ -111,6 +134,10 @@ namespace serverSide.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PortalId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("ScheduleId")
                         .HasColumnType("int");
 
@@ -128,27 +155,28 @@ namespace serverSide.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ScheduleId"));
 
                     b.Property<string>("CourseId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
+                    b.Property<string>("Day")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("End")
-                        .HasColumnType("time");
+                    b.Property<string>("End")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("InstructorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Room")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SectionId")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("Start")
-                        .HasColumnType("time");
+                    b.Property<string>("Start")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ScheduleId");
 
@@ -178,7 +206,6 @@ namespace serverSide.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SectionName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StudentCount")
@@ -289,6 +316,26 @@ namespace serverSide.Migrations
                     b.ToTable("StudentCourses");
                 });
 
+            modelBuilder.Entity("serverSide.Models.StudentInstructorEvaluation", b =>
+                {
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("InstructorId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("EvaluationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("StudentId", "InstructorId", "EvaluationId");
+
+                    b.HasIndex("EvaluationId");
+
+                    b.HasIndex("InstructorId");
+
+                    b.ToTable("StudentInstructorEvaluation");
+                });
+
             modelBuilder.Entity("serverSide.Models.Course", b =>
                 {
                     b.HasOne("serverSide.Models.Department", "Department")
@@ -316,9 +363,7 @@ namespace serverSide.Migrations
                 {
                     b.HasOne("serverSide.Models.Course", "Course")
                         .WithMany("Schedule")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CourseId");
 
                     b.HasOne("serverSide.Models.Instructor", "Instructor")
                         .WithOne("Schedule")
@@ -419,6 +464,33 @@ namespace serverSide.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("serverSide.Models.StudentInstructorEvaluation", b =>
+                {
+                    b.HasOne("serverSide.Models.Evaluation", "Evaluation")
+                        .WithMany()
+                        .HasForeignKey("EvaluationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("serverSide.Models.Instructor", "Instructor")
+                        .WithMany("Evaluations")
+                        .HasForeignKey("InstructorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("serverSide.Models.Student", "Student")
+                        .WithMany("Evaluations")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Evaluation");
+
+                    b.Navigation("Instructor");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("serverSide.Models.Course", b =>
                 {
                     b.Navigation("Schedule");
@@ -441,6 +513,8 @@ namespace serverSide.Migrations
                 {
                     b.Navigation("Course");
 
+                    b.Navigation("Evaluations");
+
                     b.Navigation("Schedule");
                 });
 
@@ -462,6 +536,8 @@ namespace serverSide.Migrations
 
             modelBuilder.Entity("serverSide.Models.Student", b =>
                 {
+                    b.Navigation("Evaluations");
+
                     b.Navigation("StudentCourses");
                 });
 #pragma warning restore 612, 618

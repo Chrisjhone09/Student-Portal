@@ -1,0 +1,93 @@
+<div class="w-[90vw] h-full lg:w-[60vw] lg:px-15 lg:py-15">
+    <div class="flex gap-5 mt-5 items-center">
+        <a routerLink="/portal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                class="h-9"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                    d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+            </svg>
+        </a>
+        <h1 class="font-extrabold text-2xl mb-2 text-purple-700">
+            FACULTY EVALUATION
+        </h1>
+    </div>
+
+    <hr>
+
+    <div class="flex flex-col gap-5 w-full mt-5">
+        <div class="flex flex-row items-center gap-5">
+            <div class="bg-purple-100 rounded-full h-40 w-40"></div>
+            <div>
+                <h1 class="text-4xl font-bold text-purple-700">Juan Delacruz</h1>
+                <p class="lg:text-lg"><b class="text-purple-700">Subject: </b>Information Management</p>
+            </div>
+        </div>
+        <hr>
+        <div class="bg-purple-100 border-l-4 border-purple-500 text-purple-700 p-4 mt-5" role="alert">
+
+            <p class="text-justify lg:text-lg"> <b class="font-bold text-2xl ">Direction:</b> Please complete the Instructor
+                Performance Evaluation by selecting
+                a rating from 1 to 5 for each statement, where <b>1 represents "Strongly Disagree"</b>
+                and <b>5 represents "Strongly Agree"</b>. You are required to choose only one option for each
+                question based on your overall experience with the instructor. Your responses are confidential
+                and will help improve the quality of teaching. The evaluation should take about 5–10 minutes
+                to complete, and once finished, please click Submit to finalize your feedback.</p>
+        </div>
+        <div class="lg:text-lg">
+            <p > <b>Rating Scale:</b> Please rate the instructor’s performance using the scale from 1 to 5, where:</p>
+            <ul class="font-bold">
+                <li>
+                    <p>[ 1 ] = Strongly Disagree</p>
+                </li>
+                <li>
+                    <p>[ 2 ] = Disagree</p>
+                </li>
+                <li>
+                    <p>[ 3 ] = Neutral</p>
+                </li>
+                <li>
+                    <p>[ 4 ] = Agree</p>
+                </li>
+                <li>
+                    <p>[ 5 ] = Strongly Agree</p>
+                </li>
+            </ul>
+        </div>
+        <p>{{rating}}</p>
+        <div>
+            <table class="w-full border">
+                <thead>
+                    <tr class="bg-purple-700 text-white lg:text-lg h-15">
+                        <th class="border w-10">No.</th>
+                        <th class="border w-[60%]">Description</th>
+                        <th class="border">5</th>
+                        <th class="border">4</th>
+                        <th class="border">3</th>
+                        <th class="border">2</th>
+                        <th class="border">1</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="lg: h-15 lg:text-lg" *ngFor="let q of evaluation ">
+                        <td class="border text-center">{{q.number}}.</td>
+                        <td class="border">{{q.question}}</td>
+                        <td class="border text-center"><input type="radio" name="{{q.number}}"></td>
+                        <td class="border text-center"><input type="radio" name="{{q.number}}"></td>
+                        <td class="border text-center"><input type="radio" name="{{q.number}}"></td>
+                        <td class="border text-center"><input type="radio" name="{{q.number}}"></td>
+                        <td class="border text-center"><input type="radio" name="{{q.number}}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <textarea class="border rounded-2xl h-40 w-full p-2 lg:text-lg min-h-30" placeholder="Leave your feedback here..."></textarea>
+        </div>
+        <div class="gap-5 flex">
+            <button class="bg-red-500 w-1/2 h-10 rounded-lg font-bold text-white text-lg lg:h-15">Cancel</button>
+            <button data-modal-target="static-modal" data-modal-toggle="static-modal"  class="bg-purple-700 w-1/2 h-10 rounded-lg font-bold text-white text-lg lg:h-15" (click)="submit()">Submit</button>
+        </div>
+    </div>
+    
+</div>
+

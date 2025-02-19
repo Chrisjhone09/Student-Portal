@@ -6,7 +6,7 @@ namespace serverSide.Models
     public class Student
     {
         [Key]
-        public string StudentId { get; set; }
+        public required string StudentId { get; set; }
         [StringLength(20)]
         public required string Firstname { get; set; }
         [StringLength(20)]
@@ -20,10 +20,11 @@ namespace serverSide.Models
         public int? DepartmentId { get; set; }
         public Department? Department { get; set; }
         public string? PortalId { get; set; }
+        public ICollection<StudentInstructorEvaluation>? Evaluations { get; set; } 
         public ICollection<StudentCourse>? StudentCourses { get; set; } = new List<StudentCourse>();
         [NotMapped]
         public List<Department> ListOfDepatment { get; set; } = new List<Department>();
         [NotMapped]
-        public string DepartmentName { get; set; }
+        public string? DepartmentName { get; set; }
     }
 }

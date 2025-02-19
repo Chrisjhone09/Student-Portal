@@ -5,5 +5,6 @@ export class Schedule {
     end : string ="";
     room : string = "";
     instructorId : number = 0;
-    courseId : string = ""
+    courseId : string = "";
+    courseName : string = "";
 }

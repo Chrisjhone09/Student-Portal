@@ -11,5 +11,8 @@ namespace serverSide.Models
         public Course? Course { get; set; }
         public Schedule? Schedule { get; set; }
         public int? ScheduleId { get; set; }
+        public string PortalId { get; set; }
+        public ICollection<StudentInstructorEvaluation>? Evaluations { get; set; }
+
     }
 }

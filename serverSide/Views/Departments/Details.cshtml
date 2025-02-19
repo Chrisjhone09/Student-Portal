@@ -2,7 +2,7 @@
 
 @{
 	ViewData["Title"] = "Details";
-	int departmentId = Model.DepartmentId;
+	int? departmentId = Model.DepartmentId;
 }
 <style>
 	.courses-student-container {
@@ -149,9 +149,8 @@
 	<form asp-controller="Courses" asp-action="Index" method="get">
 		<button class="btn btn-primary" type="submit">Events</button>
 	</form>
-	<form asp-controller="Schedules" asp-action="Index" method="get">
-		<button class="btn btn-primary" type="submit">Class Schedule</button>
-	</form>
+	<a class="btn btn-primary" asp-controller="Schedules" asp-action="Index">Class Schedule</a>
+	
 	<form asp-controller="Sections" asp-action="Index" method="get">
 		<button class="btn btn-primary" type="submit">Section</button>
 	</form>

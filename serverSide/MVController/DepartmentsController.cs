@@ -28,7 +28,7 @@ namespace serverSide.MVController
         }
 
         // GET: Departments/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -152,6 +152,7 @@ namespace serverSide.MVController
         {
             var department = new Student()
             {
+                StudentId = null!,
                 Firstname = null!,
                 Middlename = null!,
                 Lastname = null!,
@@ -193,7 +194,7 @@ namespace serverSide.MVController
                         SectionId = getSection!.SectionId
                     };
                     var getDepartment = _context.Department.FirstOrDefault(d => d.DepartmentId == studentModel.DepartmentId);
-                    getDepartment.StudentCount++;
+                    getDepartment!.StudentCount++;
                     _context.Department.Update(getDepartment);
                     _context.Add(studentModel);
                     await _context.SaveChangesAsync();
@@ -220,6 +221,7 @@ namespace serverSide.MVController
             ViewData["SectionId"] = new SelectList(_context.Set<Section>(), "SectionId", "SectionId", student.SectionId);
             return View(student);
         }
+
         private bool DepartmentExists(int id)
         {
             return _context.Department.Any(e => e.DepartmentId == id);

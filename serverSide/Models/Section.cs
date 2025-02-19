@@ -5,7 +5,7 @@ namespace serverSide.Models
     public class Section
     {
         public int SectionId { get; set; }
-        public string SectionName { get; set; }
+        public string? SectionName { get; set; }
         public int? StudentCount { get; set; }
         public ICollection<Student> Students { get; set; } = new List<Student>();
         public ICollection<StudentCourse> StudentCourses { get; set; } = new List<StudentCourse>();
@@ -18,7 +18,7 @@ namespace serverSide.Models
         [NotMapped]
         public List<Student> ListOfStudents { get; set; } = new List<Student>();
         [NotMapped]
-        public Section SectionObj { get; set; }
-        public List<Department> ListOfDepartments { get; internal set; }
+        public Section? SectionObj { get; set; }
+        public List<Department>? ListOfDepartments { get; internal set; }
     }
 }

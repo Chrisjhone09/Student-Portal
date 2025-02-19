@@ -13,7 +13,7 @@ namespace serverSide.Migrations.CDKPortal
 {
     [DbContext(typeof(CDKPortalContext))]
     [Migration("20250206133803_init")]
-    partial class init
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

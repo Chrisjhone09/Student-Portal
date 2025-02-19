@@ -56,7 +56,7 @@ namespace serverSide
 
             ).AddJwtBearer(options =>
                 {
-                    options.RequireHttpsMetadata = false; // Set to true in production
+                    options.RequireHttpsMetadata = false; 
                     options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -64,9 +64,9 @@ namespace serverSide
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = "https://localhost:7095", // Make sure this matches the token issuer
-                        ValidAudience = "https://localhost:4200", // Make sure this matches the expected audience
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)) // Must match the token's signing key
+                        ValidIssuer = "https://localhost:7095", 
+                        ValidAudience = "https://localhost:4200",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!)) 
                     };
                 });
 
