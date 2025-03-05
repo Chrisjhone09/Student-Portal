@@ -6,20 +6,22 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using serverSide.Data;
 using serverSide.Models;
+using serverSide.CommonUtilities;
+using System.Security.Claims;
 
 namespace serverSide
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<CDKPortalContext>(options =>
-           options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
+           options.UseSqlServer(builder.Configuration.GetConnectionString("PortalAccount")));
 
             builder.Services.AddDbContext<CDKDbContext>(options =>
-           options.UseSqlServer(builder.Configuration.GetConnectionString("Connection2")));
+           options.UseSqlServer(builder.Configuration.GetConnectionString("CDKDatabase")));
             builder.Services.AddControllersWithViews();
             builder.Services.AddControllers();
 
@@ -66,7 +68,8 @@ namespace serverSide
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = "https://localhost:7095", 
                         ValidAudience = "https://localhost:4200",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!)) 
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!)),
+                        RoleClaimType = ClaimTypes.Role
                     };
                 });
 
@@ -74,6 +77,12 @@ namespace serverSide
             builder.Services.AddOpenApi();
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                await DataSeeder.SeedRolesAndAdmin(services);
+            }
 
             if (app.Environment.IsDevelopment())
             {

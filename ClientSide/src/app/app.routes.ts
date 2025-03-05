@@ -8,6 +8,8 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { EvaluationHomeComponent } from './evaluation-home/evaluation-home.component';
 import { InstructorEvaluationComponent } from './instructor-evaluation/instructor-evaluation.component';
 import { GradesComponent } from './grades/grades.component';
+import { EvaluationHistoryComponent } from './evaluation-history/evaluation-history.component';
+import { AdminComponent } from './admin/admin.component';
 
 export const routes: Routes = [
     {path: 'register', component: RegisterComponent},
@@ -15,8 +17,9 @@ export const routes: Routes = [
     {path:'', redirectTo: 'login', pathMatch: 'full'},
     {path: 'home', component: HomeComponent, },
     {path: 'portal', component: PortalComponent, },
-    {path: 'portal/evaluation', component: EvaluationHomeComponent},
+    {path: 'evaluation/instructors', component: EvaluationHomeComponent},
     {path: 'evaluation/:instructorId', component: InstructorEvaluationComponent},
     {path: 'gradesView', component: GradesComponent},
-    {path: 'evaluation/testPage', component: InstructorEvaluationComponent}
+    {path: 'evaluation-history', component: EvaluationHistoryComponent},
+    {path: 'admin', component: AdminComponent}
 ];

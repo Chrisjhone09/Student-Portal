@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-instructor-home',
@@ -6,6 +6,9 @@ import { Component } from '@angular/core';
   templateUrl: './instructor-home.component.html',
   styleUrl: './instructor-home.component.css'
 })
-export class InstructorHomeComponent {
+export class InstructorHomeComponent implements OnInit {
+  ngOnInit(): void {
+    
+  }
 
 }

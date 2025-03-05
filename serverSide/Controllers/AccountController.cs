@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using server.Models;
 using server;
 using serverSide.Data;
 using serverSide.Models;
+using serverSide.DTO;
 
 namespace serverSide.Controllers
 {
@@ -34,15 +34,13 @@ namespace serverSide.Controllers
             _dbContext = dbContext;
         }
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        public async Task<IActionResult> Login([FromBody] LoginDTO model)
         {
 
             if (!ModelState.IsValid || model == null)
                 return BadRequest("Invalid login request.");
 
             var user = await _userManager.FindByEmailAsync(model.CDKemail);
-
-
 
             if (user == null)
                 return Unauthorized("Invalid email or password.");
@@ -54,7 +52,9 @@ namespace serverSide.Controllers
             var secretKey = _configuration["Jwt:Key"];
             if (string.IsNullOrEmpty(secretKey))
                 return StatusCode(500, "JWT secret key is not configured.");
-            var roleOfUser = GetRole(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            var roleOfUser = roles.FirstOrDefault();
+
 
             var token = JwtTokenGenerator.GenerateToken(user, roleOfUser, secretKey, 30);
 
@@ -64,13 +64,12 @@ namespace serverSide.Controllers
                 UserName = user.UserName,
                 Middlename = user.Middlename,
                 Lastname = user.Lastname,
-                Program = user.Program,
                 Token = token
             };
 
             return Ok(student);
         }
-        
+
         [HttpPost("logout")]
         public async Task<IActionResult> Logout([FromBody] object empty)
         {
@@ -90,8 +89,11 @@ namespace serverSide.Controllers
             }
         }
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] Register model)
+        public async Task<IActionResult> Register([FromBody] RegisterDTO model)
         {
+
+
+
             var isStudentEnrolled = _dbContext.Students.Any(s => s.StudentId == model.StudentId);
             if (model == null)
                 return BadRequest("Invalid user data.");
@@ -114,11 +116,11 @@ namespace serverSide.Controllers
                     Lastname = model.LastName,
                     Email = model.Email,
                     LockoutEnabled = false,
-                    StudentId = model.StudentId,
                     EmailConfirmed = true
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
+                await _roleManager.CreateAsync(new IdentityRole("Student"));
                 await _userManager.AddToRoleAsync(user, _roleManager.Roles.FirstOrDefault(r => r.Name == "Student").Name);
 
                 if (result.Succeeded)
@@ -142,7 +144,7 @@ namespace serverSide.Controllers
                 }
 
             }
-            else if (!isStudentEnrolled && _dbContext.Instructors.Any(i => i.InstructorId.ToString() == model.StudentId))
+            else if (!isStudentEnrolled && _dbContext.Faculty.Any(i => i.FacultyId.ToString() == model.StudentId))
             {
                 var existingUser = await _userManager.FindByEmailAsync(model.Email);
                 if (existingUser != null)
@@ -156,22 +158,22 @@ namespace serverSide.Controllers
                     Lastname = model.LastName,
                     Email = model.Email,
                     LockoutEnabled = false,
-                    StudentId = model.StudentId,
                     EmailConfirmed = true
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
-                await _userManager.AddToRoleAsync(user, _roleManager.Roles.FirstOrDefault(r => r.Name == "Student").Name);
+                await _roleManager.CreateAsync(new IdentityRole("Instructor"));
+                await _userManager.AddToRoleAsync(user, _roleManager.Roles.FirstOrDefault(r => r.Name == "Instructor").Name);
                 if (result.Succeeded)
                 {
                     var portalId = user.Id;
 
-                    var getExistingInstructor = _dbContext.Instructors.FirstOrDefault(s => s.InstructorId.ToString() == model.StudentId);
+                    var getExistingInstructor = _dbContext.Faculty.FirstOrDefault(s => s.FacultyId.ToString() == model.StudentId);
                     if (getExistingInstructor != null)
                     {
                         getExistingInstructor.PortalId = portalId;
 
-                        _dbContext.Instructors.Update(getExistingInstructor);
+                        _dbContext.Faculty.Update(getExistingInstructor);
                         await _dbContext.SaveChangesAsync();
 
                         return Ok(new { message = "Registration successful." });
@@ -188,15 +190,15 @@ namespace serverSide.Controllers
         private string GetRole(User user)
         {
             var isStudent = _dbContext.Students.FirstOrDefault(s => s.PortalId == user.Id) != null ? true : false;
-            var isInstructor = _dbContext.Instructors.FirstOrDefault(i => i.PortalId == user.Id) != null ? true : false;
-            if (!isStudent && isInstructor)
-            {
-                return "Instructor";
-            }
-            else
-            {
-                return "Student";
-            }
+            // var isInstructor = _dbContext.Instructors.FirstOrDefault(i => i.PortalId == user.Id) != null ? true : false;
+            //if (!isStudent && isInstructor)
+            //{
+            //    return "Instructor";
+            //}
+            //else
+            //{
+            return "Student";
+
 
         }
     }

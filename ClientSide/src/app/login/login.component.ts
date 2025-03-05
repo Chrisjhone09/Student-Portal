@@ -12,10 +12,9 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  errorMessage = "Dili pani functional"
   isBtnClicked = false;
   user : LoginModel = new LoginModel();
-  constructor(private service : AuthService, private route : Router) {}
+  constructor(public service : AuthService, private route : Router) {}
   
 
   showMessage() {

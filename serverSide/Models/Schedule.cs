@@ -10,15 +10,13 @@ namespace serverSide.Models
         public string Start { get; set; }
         public string End { get; set; }
         public string? Room { get; set; }
-        public ICollection<StudentCourse>? StudentCourses { get; set; } = new List<StudentCourse>();
-        public Section? Section { get; set; }
-        public int? SectionId { get; set; }
-        public Instructor? Instructor { get; set; }
-        public int? InstructorId { get; set; }
+        public Faculty? Instructor { get; set; }
+        public string? FacultyId { get; set; }
         public Course? Course { get; set; }
         public string? CourseId { get; set; }
         [NotMapped]
-        public string CourseName { get; set; }
+        public string? CourseName { get; set; }
+        public StudentCourse? StudentCourse { get; set; }
 
     }
 }

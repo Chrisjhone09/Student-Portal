@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserRegister } from '../models/user-register';
 import { LoginModel } from '../models/login-model';
@@ -12,6 +12,9 @@ export class AuthService {
   isLoggedin = false;
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
+  errorMessage: string | undefined;
+  invalidStudentIdErrorMessage: string | undefined;
+
 
   private api = "https://localhost:7095/api"
 
@@ -20,14 +23,14 @@ export class AuthService {
     if (savedUser) {
       try {
         const parsedUser = JSON.parse(savedUser);
-        this.userSubject.next(parsedUser); 
+        this.userSubject.next(parsedUser);
       } catch (error) {
         console.error('Failed to parse saved user:', error);
-        localStorage.removeItem('student'); 
+        localStorage.removeItem('student');
       }
     }
   }
-  
+
 
   register(user: UserRegister) {
     return this.http.post<any>(this.api + '/account/register', user);
@@ -35,13 +38,13 @@ export class AuthService {
   login(user: LoginModel) {
     this.http.post<any>(this.api + "/account/login", user).subscribe({
       next: (response) => {
-        console.log("API Response:", response); 
-        if (response && response.token) { 
+        console.log("API Response:", response);
+        if (response && response.token) {
           localStorage.setItem('token', response.token);
-          localStorage.setItem('student', JSON.stringify(response)); 
+          localStorage.setItem('student', JSON.stringify(response));
           this.userSubject.next(response);
           this.isLoggedin = true;
-          if(response.firstname == "Chris Jhone") {
+          if (response.firstname == "Chris Jhone") {
             this.route.navigate(["/portal"])
           }
           this.route.navigate(['/portal']);
@@ -51,6 +54,7 @@ export class AuthService {
       },
       error: (err) => {
         console.error("Login failed:", err.message);
+        this.errorMessage = "Invalid password or email"
       }
     });
   }
@@ -70,4 +74,18 @@ export class AuthService {
     })
   }
 
+  getToken(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+    });
+  }
+  createHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      })
+    };
+  }
 }

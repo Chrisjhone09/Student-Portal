@@ -39,6 +39,7 @@
             <input type="text" name="studentID" placeholder="Enter your Student ID (Required)" maxlength="8"
                 pattern="[0-9]{8}" class="border-2 rounded-lg p-2 w-5/5" [(ngModel)]="userInfo.studentID"
                 [ngModelOptions]="{standalone: true}" />
+                <p>{{errorMessage}}</p>
         </div>
         <div class="flex justify-center items-center flex-col gap-3 mt-2 w-5/5 px-10">
             <label class="self-start font-bold text-sm text-purple-700 px-2">CdK Email</label>

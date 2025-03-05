@@ -1,4 +1,4 @@
-﻿@model IEnumerable<serverSide.ViewModel.StudentCourseView>
+﻿@model IEnumerable<serverSide.Models.Student>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,22 +13,28 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Student!.Firstname)
+                @Html.DisplayNameFor(model => model.Firstname)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student!.Middlename)
+                @Html.DisplayNameFor(model => model.Middlename)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student!.Lastname)
+                @Html.DisplayNameFor(model => model.Lastname)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student!.Status)
+                @Html.DisplayNameFor(model => model.Year)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student!.Section)
+                @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student!.Department)
+                @Html.DisplayNameFor(model => model.SectionId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PortalId)
             </th>
             <th></th>
         </tr>
@@ -37,22 +43,28 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                    @Html.DisplayFor(modelItem => item.Student.Firstname)
+                @Html.DisplayFor(modelItem => item.Firstname)
             </td>
             <td>
-                    @Html.DisplayFor(modelItem => item.Student.Middlename)
+                @Html.DisplayFor(modelItem => item.Middlename)
             </td>
             <td>
-                    @Html.DisplayFor(modelItem => item.Student.Lastname)
+                @Html.DisplayFor(modelItem => item.Lastname)
             </td>
             <td>
-                    @Html.DisplayFor(modelItem => item.Student.Status)
+                @Html.DisplayFor(modelItem => item.Year)
             </td>
             <td>
-                    @Html.DisplayFor(modelItem => item.Student.Section.SectionId)
+                @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Department.DepartmentName)
+                @Html.DisplayFor(modelItem => item.SectionId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PortalId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.StudentId">Edit</a> |

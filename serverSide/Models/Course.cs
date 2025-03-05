@@ -15,26 +15,10 @@ namespace serverSide.Models
         public string? PrerequisiteTo { get; set; }
         public ICollection<StudentCourse>? StudentCourses { get; set; } = new List<StudentCourse>();
         public int? DepartmentId { get; set; }
-        public Department Department { get; set; }
-        public int? InstructorId { get; set; }
-        public Instructor? Instructor { get; set; }
         public int? Year { get; set; }
         public int? Semester { get; set; }
         public ICollection<Schedule>? Schedule { get; set; }
-
-
-
-        [NotMapped]
-        public List<Course> ListOfCoures { get; set; } = new List<Course>();
-        [NotMapped]
-        public List<Instructor> ListOfInstructor { get; set; } = new List<Instructor>();
-        [NotMapped]
-        public string PreFrom { get; set; }
-        [NotMapped]
-        public string PreTo { get; set; }
-        [NotMapped]
-        public string InstructorName { get; set; }
-
+        public ICollection<InstructorCourse>? InstructorCourses { get; set; }
 
     }
 

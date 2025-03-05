@@ -16,15 +16,11 @@ namespace serverSide.Models
         public int? Year { get; set; }
         public string? Status { get; set; }
         public int? SectionId { get; set; }
-        public Section? Section { get; set; }
         public int? DepartmentId { get; set; }
-        public Department? Department { get; set; }
+        public Department Department { get; set; }
         public string? PortalId { get; set; }
         public ICollection<StudentInstructorEvaluation>? Evaluations { get; set; } 
         public ICollection<StudentCourse>? StudentCourses { get; set; } = new List<StudentCourse>();
-        [NotMapped]
-        public List<Department> ListOfDepatment { get; set; } = new List<Department>();
-        [NotMapped]
-        public string? DepartmentName { get; set; }
+        
     }
 }

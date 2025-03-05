@@ -18,8 +18,8 @@ namespace server
 
 
             var claims = new List<Claim>
-            { 
-                //new Claim(ClaimTypes.Role, role),
+            {
+                new Claim(ClaimTypes.Role, role),
                  new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                  new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
             };

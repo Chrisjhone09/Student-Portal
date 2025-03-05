@@ -37,9 +37,6 @@ namespace serverSide.Migrations
                     b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InstructorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PrerequisiteFrom")
                         .HasColumnType("nvarchar(max)");
 
@@ -57,12 +54,6 @@ namespace serverSide.Migrations
 
                     b.HasKey("CourseCode");
 
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("InstructorId")
-                        .IsUnique()
-                        .HasFilter("[InstructorId] IS NOT NULL");
-
                     b.ToTable("Courses");
                 });
 
@@ -78,17 +69,15 @@ namespace serverSide.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SectionId")
+                    b.Property<int>("NumberOfEnrolledStudents")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StudentCount")
+                    b.Property<int>("NumberOfInstructors")
                         .HasColumnType("int");
 
                     b.HasKey("DepartmentId");
 
-                    b.HasIndex("SectionId");
-
-                    b.ToTable("Department");
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("serverSide.Models.Evaluation", b =>
@@ -111,16 +100,20 @@ namespace serverSide.Migrations
 
                     b.HasKey("EvaluationId");
 
-                    b.ToTable("Evaluation");
+                    b.ToTable("Evaluations");
                 });
 
-            modelBuilder.Entity("serverSide.Models.Instructor", b =>
+            modelBuilder.Entity("serverSide.Models.Faculty", b =>
                 {
-                    b.Property<int>("InstructorId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("FacultyId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstructorId"));
+                    b.Property<string>("DepartmentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -131,19 +124,35 @@ namespace serverSide.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PortalId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ScheduleId")
-                        .HasColumnType("int");
+                    b.HasKey("FacultyId");
 
-                    b.HasKey("InstructorId");
+                    b.HasIndex("DepartmentId");
 
-                    b.ToTable("Instructors");
+                    b.ToTable("Faculty");
+                });
+
+            modelBuilder.Entity("serverSide.Models.InstructorCourse", b =>
+                {
+                    b.Property<string>("FacultyId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CourseId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("FacultyId", "CourseId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("InstructorCourse");
                 });
 
             modelBuilder.Entity("serverSide.Models.Schedule", b =>
@@ -165,14 +174,11 @@ namespace serverSide.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("InstructorId")
-                        .HasColumnType("int");
+                    b.Property<string>("FacultyId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Room")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SectionId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Start")
                         .IsRequired()
@@ -182,47 +188,9 @@ namespace serverSide.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("InstructorId")
-                        .IsUnique()
-                        .HasFilter("[InstructorId] IS NOT NULL");
-
-                    b.HasIndex("SectionId");
+                    b.HasIndex("FacultyId");
 
                     b.ToTable("Schedules");
-                });
-
-            modelBuilder.Entity("serverSide.Models.Section", b =>
-                {
-                    b.Property<int>("SectionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SectionId"));
-
-                    b.Property<string>("CourseId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SectionName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("StudentCount")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("SectionId");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.ToTable("Section");
                 });
 
             modelBuilder.Entity("serverSide.Models.Student", b =>
@@ -264,8 +232,6 @@ namespace serverSide.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.HasIndex("SectionId");
-
                     b.ToTable("Students");
                 });
 
@@ -277,16 +243,10 @@ namespace serverSide.Migrations
                     b.Property<string>("CourseId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("FacultyId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("ScheduleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SectionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InstructorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DepartmentID")
                         .HasColumnType("int");
 
                     b.Property<int?>("Final")
@@ -301,17 +261,14 @@ namespace serverSide.Migrations
                     b.Property<int?>("Prelim")
                         .HasColumnType("int");
 
-                    b.HasKey("StudentId", "CourseId", "ScheduleId", "SectionId", "InstructorId");
+                    b.HasKey("StudentId", "CourseId", "FacultyId", "ScheduleId");
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("DepartmentID");
+                    b.HasIndex("FacultyId");
 
-                    b.HasIndex("InstructorId");
-
-                    b.HasIndex("ScheduleId");
-
-                    b.HasIndex("SectionId");
+                    b.HasIndex("ScheduleId")
+                        .IsUnique();
 
                     b.ToTable("StudentCourses");
                 });
@@ -321,42 +278,48 @@ namespace serverSide.Migrations
                     b.Property<string>("StudentId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("InstructorId")
-                        .HasColumnType("int");
+                    b.Property<string>("FacultyId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid>("EvaluationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("StudentId", "InstructorId", "EvaluationId");
+                    b.HasKey("StudentId", "FacultyId", "EvaluationId");
 
                     b.HasIndex("EvaluationId");
 
-                    b.HasIndex("InstructorId");
+                    b.HasIndex("FacultyId");
 
-                    b.ToTable("StudentInstructorEvaluation");
+                    b.ToTable("StudentInstructorEvaluations");
                 });
 
-            modelBuilder.Entity("serverSide.Models.Course", b =>
+            modelBuilder.Entity("serverSide.Models.Faculty", b =>
                 {
                     b.HasOne("serverSide.Models.Department", "Department")
-                        .WithMany("Courses")
-                        .HasForeignKey("DepartmentId");
-
-                    b.HasOne("serverSide.Models.Instructor", "Instructor")
-                        .WithOne("Course")
-                        .HasForeignKey("serverSide.Models.Course", "InstructorId")
+                        .WithMany("Faculties")
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Department");
-
-                    b.Navigation("Instructor");
                 });
 
-            modelBuilder.Entity("serverSide.Models.Department", b =>
+            modelBuilder.Entity("serverSide.Models.InstructorCourse", b =>
                 {
-                    b.HasOne("serverSide.Models.Section", null)
-                        .WithMany("ListOfDepartments")
-                        .HasForeignKey("SectionId");
+                    b.HasOne("serverSide.Models.Course", "Course")
+                        .WithMany("InstructorCourses")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("serverSide.Models.Faculty", "Instructor")
+                        .WithMany("InstructorCourses")
+                        .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Instructor");
                 });
 
             modelBuilder.Entity("serverSide.Models.Schedule", b =>
@@ -365,36 +328,13 @@ namespace serverSide.Migrations
                         .WithMany("Schedule")
                         .HasForeignKey("CourseId");
 
-                    b.HasOne("serverSide.Models.Instructor", "Instructor")
-                        .WithOne("Schedule")
-                        .HasForeignKey("serverSide.Models.Schedule", "InstructorId");
-
-                    b.HasOne("serverSide.Models.Section", "Section")
-                        .WithMany("Schedule")
-                        .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasOne("serverSide.Models.Faculty", "Instructor")
+                        .WithMany()
+                        .HasForeignKey("FacultyId");
 
                     b.Navigation("Course");
 
                     b.Navigation("Instructor");
-
-                    b.Navigation("Section");
-                });
-
-            modelBuilder.Entity("serverSide.Models.Section", b =>
-                {
-                    b.HasOne("serverSide.Models.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId");
-
-                    b.HasOne("serverSide.Models.Department", "Department")
-                        .WithMany("Sections")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("serverSide.Models.Student", b =>
@@ -402,16 +342,9 @@ namespace serverSide.Migrations
                     b.HasOne("serverSide.Models.Department", "Department")
                         .WithMany("Students")
                         .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("serverSide.Models.Section", "Section")
-                        .WithMany("Students")
-                        .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Department");
-
-                    b.Navigation("Section");
                 });
 
             modelBuilder.Entity("serverSide.Models.StudentCourse", b =>
@@ -422,27 +355,16 @@ namespace serverSide.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("serverSide.Models.Department", "Department")
-                        .WithMany("StudentCourses")
-                        .HasForeignKey("DepartmentID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("serverSide.Models.Instructor", "Instructor")
+                    b.HasOne("serverSide.Models.Faculty", "Faculty")
                         .WithMany()
-                        .HasForeignKey("InstructorId")
+                        .HasForeignKey("FacultyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("serverSide.Models.Schedule", "Schedule")
-                        .WithMany("StudentCourses")
-                        .HasForeignKey("ScheduleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("serverSide.Models.Section", "Section")
-                        .WithMany("StudentCourses")
-                        .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithOne("StudentCourse")
+                        .HasForeignKey("serverSide.Models.StudentCourse", "ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("serverSide.Models.Student", "Student")
@@ -453,13 +375,9 @@ namespace serverSide.Migrations
 
                     b.Navigation("Course");
 
-                    b.Navigation("Department");
-
-                    b.Navigation("Instructor");
+                    b.Navigation("Faculty");
 
                     b.Navigation("Schedule");
-
-                    b.Navigation("Section");
 
                     b.Navigation("Student");
                 });
@@ -472,9 +390,9 @@ namespace serverSide.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("serverSide.Models.Instructor", "Instructor")
+                    b.HasOne("serverSide.Models.Faculty", "Faculty")
                         .WithMany("Evaluations")
-                        .HasForeignKey("InstructorId")
+                        .HasForeignKey("FacultyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -486,13 +404,15 @@ namespace serverSide.Migrations
 
                     b.Navigation("Evaluation");
 
-                    b.Navigation("Instructor");
+                    b.Navigation("Faculty");
 
                     b.Navigation("Student");
                 });
 
             modelBuilder.Entity("serverSide.Models.Course", b =>
                 {
+                    b.Navigation("InstructorCourses");
+
                     b.Navigation("Schedule");
 
                     b.Navigation("StudentCourses");
@@ -500,38 +420,21 @@ namespace serverSide.Migrations
 
             modelBuilder.Entity("serverSide.Models.Department", b =>
                 {
-                    b.Navigation("Courses");
-
-                    b.Navigation("Sections");
-
-                    b.Navigation("StudentCourses");
+                    b.Navigation("Faculties");
 
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("serverSide.Models.Instructor", b =>
+            modelBuilder.Entity("serverSide.Models.Faculty", b =>
                 {
-                    b.Navigation("Course");
-
                     b.Navigation("Evaluations");
 
-                    b.Navigation("Schedule");
+                    b.Navigation("InstructorCourses");
                 });
 
             modelBuilder.Entity("serverSide.Models.Schedule", b =>
                 {
-                    b.Navigation("StudentCourses");
-                });
-
-            modelBuilder.Entity("serverSide.Models.Section", b =>
-                {
-                    b.Navigation("ListOfDepartments");
-
-                    b.Navigation("Schedule");
-
-                    b.Navigation("StudentCourses");
-
-                    b.Navigation("Students");
+                    b.Navigation("StudentCourse");
                 });
 
             modelBuilder.Entity("serverSide.Models.Student", b =>

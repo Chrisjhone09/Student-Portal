@@ -15,7 +15,7 @@ export class RegisterComponent {
   errorMessage : string = "";
   userInfo = new UserRegister();
   isPasswordMatched : boolean = false;
-  constructor(private service: AuthService, private route : Router) {}
+  constructor(public service: AuthService, private route : Router) {}
   
   register() {
     if (this.userInfo.password !== this.userInfo.confirmPassword) {
@@ -29,7 +29,7 @@ export class RegisterComponent {
         this.route.navigate(['/login'])
       },
       error: (error) => {
-        
+        this.errorMessage = "Student ID not found"
       },
     });
 
