@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Faculty } from './faculty';
+import { Faculty } from '../models-and-DTO/faculty';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
@@ -13,7 +13,10 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './add-faculty.component.css'
 })
 export class AddFacultyComponent {
-  constructor(private adminService: AdminService, private route : Router, private mat : MatDialog){}
+
+  isRegistrar: boolean = false
+  isNotRegistrar: boolean = true;
+  constructor(private adminService: AdminService, private route: Router, private mat: MatDialog) { }
   faculty: Faculty = new Faculty()
   onSubmit() {
     this.adminService.addFaculty(this.faculty).subscribe({
@@ -24,5 +27,12 @@ export class AddFacultyComponent {
         console.log(err);
       }
     });
-    }
+  }
+
+  checkRegistrar() {
+    this.isRegistrar = this.faculty.role === 'Registrar';
+    this.isNotRegistrar = !this.isRegistrar; 
+  }
+  
+
 }

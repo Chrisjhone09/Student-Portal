@@ -16,11 +16,11 @@ namespace serverSide.Models
         public int? Year { get; set; }
         public string? Status { get; set; }
         public int? SectionId { get; set; }
-        public int? DepartmentId { get; set; }
-        public Department Department { get; set; }
         public string? PortalId { get; set; }
         public ICollection<StudentInstructorEvaluation>? Evaluations { get; set; } 
         public ICollection<StudentCourse>? StudentCourses { get; set; } = new List<StudentCourse>();
-        
+        public AcademicProgram? Program { get; set; }
+        public int? ProgramId { get; set; }
+
     }
 }

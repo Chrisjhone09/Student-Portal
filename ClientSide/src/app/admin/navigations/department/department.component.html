@@ -1,0 +1,30 @@
+<div class="flex justify-center w-full mb-3">
+    <h1 class="font-extrabold text-2xl text-purple-700">DEPARTMENTS</h1>
+
+</div>
+<hr>
+<div class=" gap-2 flex mt-5 mb-5">
+
+    <a data-modal-target="static-modal" data-modal-toggle="static-modal"
+        class=" p-3 rounded-lg bg-purple-700 text-white font-medium" (click)="addDepartment()" routerLink="/admin/add-department">Add Department</a>
+</div>
+<table class="w-full border-collapse border border-gray-300 shadow-md rounded-lg overflow-hidden">
+    <thead class="bg-purple-700 text-white">
+        <tr>
+            <th class="p-3 text-left border-b border-gray-400">Department Name</th>
+            <th class="p-3 text-left border-b border-gray-400">Number of Students</th>
+            <th class="p-3 text-left border-b border-gray-400">Number of Faculty/Instructors</th>
+            <th class="p-3 text-left border-b border-gray-400">Head</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let program of programList"
+            class="bg-gray-100 even:bg-gray-200 hover:bg-purple-200 transition-colors" >
+
+            <td class="p-3 border-b border-gray-300">{{ program.programName }}</td>
+            <td class="p-3 border-b border-gray-300">{{ program.numberOfStudents }}</td>
+            <td class="p-3 border-b border-gray-300">{{ program.numberOfFaculty }}</td>
+            <td class="p-3 border-b border-gray-300">{{ program.headName }}</td>
+        </tr>
+    </tbody>
+</table>

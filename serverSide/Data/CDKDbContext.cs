@@ -14,12 +14,13 @@ namespace serverSide.Data
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<StudentCourse> StudentCourses { get; set; }
         public DbSet<Evaluation> Evaluations { get; set; }
-        public DbSet<Department> Departments { get; set; }
+        public DbSet<AcademicProgram> AcademicPrograms { get; set; }
         public DbSet<StudentInstructorEvaluation> StudentInstructorEvaluations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
+            modelBuilder.Entity<AcademicProgram>().HasKey(p => p.ProgramId);
 
             modelBuilder.Entity<StudentCourse>()
          .HasKey(sc => new { sc.StudentId, sc.CourseId, sc.FacultyId, sc.ScheduleId});
@@ -29,6 +30,7 @@ namespace serverSide.Data
 
             modelBuilder.Entity<InstructorCourse>()
                 .HasKey(ic => new {ic.FacultyId, ic.CourseId });
+
 
             modelBuilder.Entity<StudentCourse>()
                 .HasOne(sc => sc.Schedule)
@@ -80,15 +82,18 @@ namespace serverSide.Data
                 .WithOne(sie => sie.Faculty)
                 .HasForeignKey(sie => sie.FacultyId).OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Department>()
-                .HasMany(d => d.Faculties)
-                .WithOne(i => i.Department)
-                .HasForeignKey(i => i.DepartmentId).OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Department>()
-               .HasMany(d => d.Students)
-               .WithOne(s => s.Department)
-               .HasForeignKey(s => s.DepartmentId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.Program)
+                .WithMany(p => p.Students)
+                .HasForeignKey(s => s.ProgramId).OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Faculty>()
+                .HasOne(i => i.Program)
+                .WithMany(p => p.Faculties)
+                .HasForeignKey(i => i.ProgramId).OnDelete(DeleteBehavior.Restrict);
+
+
         }
 
     }

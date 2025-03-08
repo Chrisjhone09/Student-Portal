@@ -187,19 +187,6 @@ namespace serverSide.Controllers
 
             return BadRequest();
         }
-        private string GetRole(User user)
-        {
-            var isStudent = _dbContext.Students.FirstOrDefault(s => s.PortalId == user.Id) != null ? true : false;
-            // var isInstructor = _dbContext.Instructors.FirstOrDefault(i => i.PortalId == user.Id) != null ? true : false;
-            //if (!isStudent && isInstructor)
-            //{
-            //    return "Instructor";
-            //}
-            //else
-            //{
-            return "Student";
-
-
-        }
+        
     }
 }

@@ -1,0 +1,23 @@
+<div class="flex justify-center w-full mb-3">
+    <h1 class="font-extrabold text-2xl text-purple-700">PORTAL USERS LIST</h1>
+    
+</div>
+<hr>
+<table class="w-full border-collapse border border-gray-300 shadow-md rounded-lg overflow-hidden mt-5">
+    <thead class="bg-purple-700 text-white">
+        <tr>
+            <th class="p-3 text-left border-b border-gray-400">User ID</th>
+            <th class="p-3 text-left border-b border-gray-400">Name</th>
+            <th class="p-3 text-left border-b border-gray-400">Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of user" 
+            class="bg-gray-100 even:bg-gray-200 hover:bg-purple-200 transition-colors">
+            
+            <td class="p-3 border-b border-gray-300">{{ user.id }}</td>
+            <td class="p-3 border-b border-gray-300">{{ user.lastName }}, {{ user.firstName }} {{ user.middleName }}</td>
+            <td class="p-3 border-b border-gray-300">{{ user.email }}</td>
+        </tr>
+    </tbody>
+</table>

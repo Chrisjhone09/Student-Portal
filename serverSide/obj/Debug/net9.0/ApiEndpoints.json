@@ -65,8 +65,91 @@
   },
   {
     "ContainingType": "serverSide.Controllers.AdminController",
+    "Method": "CreateDepartment",
+    "RelativePath": "api/Admin/create-program",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "serverSide.DTO.DepartmentWithHeadDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "serverSide.Controllers.AdminController",
+    "Method": "ViewFacultyDetails",
+    "RelativePath": "api/Admin/faculty-details/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "serverSide.Controllers.AdminController",
     "Method": "GetFacultyList",
     "RelativePath": "api/Admin/faculty-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "serverSide.Controllers.AdminController",
+    "Method": "GetAcademicProgramList",
+    "RelativePath": "api/Admin/program-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "serverSide.Controllers.AdminController",
+    "Method": "GetStudentList",
+    "RelativePath": "api/Admin/student-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "serverSide.Controllers.AdminController",
+    "Method": "UpdateFaculty",
+    "RelativePath": "api/Admin/update-faculty/{facultyId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "faculty",
+        "Type": "serverSide.Models.Faculty",
+        "IsRequired": true
+      },
+      {
+        "Name": "facultyId",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "serverSide.Controllers.AdminController",
+    "Method": "GetUserList",
+    "RelativePath": "api/Admin/user-list",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -168,6 +251,16 @@
     "ContainingType": "serverSide.Controllers.PortalController",
     "Method": "GetStudentProfile",
     "RelativePath": "api/portal",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "serverSide.Controllers.Registrar",
+    "Method": "GetStudentList",
+    "RelativePath": "api/Registrar/student-list",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

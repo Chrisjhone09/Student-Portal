@@ -135,6 +135,136 @@
         }
       }
     },
+    "/api/Admin/student-list": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/user-list": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/program-list": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/create-program": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentWithHeadDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentWithHeadDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartmentWithHeadDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/faculty-details/{id}": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/update-faculty/{facultyId}": {
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "facultyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Faculty"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Faculty"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Faculty"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Evaluation/instructors": {
       "get": {
         "tags": [
@@ -272,10 +402,171 @@
           }
         }
       }
+    },
+    "/api/Registrar/student-list": {
+      "get": {
+        "tags": [
+          "Registrar"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AcademicProgram": {
+        "type": "object",
+        "properties": {
+          "programId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "programName": {
+            "type": "string",
+            "nullable": true
+          },
+          "faculties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Faculty"
+            },
+            "nullable": true
+          },
+          "students": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Student"
+            },
+            "nullable": true
+          },
+          "headName": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfStudents": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfFaculty": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Course": {
+        "type": "object",
+        "properties": {
+          "courseCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "courseTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "credits": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "units": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "prerequisiteFrom": {
+            "type": "string",
+            "nullable": true
+          },
+          "prerequisiteTo": {
+            "type": "string",
+            "nullable": true
+          },
+          "studentCourses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentCourse"
+            },
+            "nullable": true
+          },
+          "departmentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "semester": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "schedule": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Schedule"
+            },
+            "nullable": true
+          },
+          "instructorCourses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InstructorCourse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DepartmentWithHeadDTO": {
+        "type": "object",
+        "properties": {
+          "departmentName": {
+            "type": "string",
+            "nullable": true
+          },
+          "facultyId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Evaluation": {
+        "required": [
+          "rating"
+        ],
+        "type": "object",
+        "properties": {
+          "evaluationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "feedback": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "rating": {
+            "type": "number",
+            "format": "double"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "EvaluationResponse": {
         "type": "object",
         "properties": {
@@ -290,6 +581,58 @@
           "rating": {
             "type": "number",
             "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Faculty": {
+        "type": "object",
+        "properties": {
+          "facultyId": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "middleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          },
+          "portalId": {
+            "type": "string",
+            "nullable": true
+          },
+          "programId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "program": {
+            "$ref": "#/components/schemas/AcademicProgram"
+          },
+          "instructorCourses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InstructorCourse"
+            },
+            "nullable": true
+          },
+          "evaluations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentInstructorEvaluation"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -314,6 +657,26 @@
             "nullable": true
           },
           "role": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "InstructorCourse": {
+        "type": "object",
+        "properties": {
+          "facultyId": {
+            "type": "string",
+            "nullable": true
+          },
+          "instructor": {
+            "$ref": "#/components/schemas/Faculty"
+          },
+          "course": {
+            "$ref": "#/components/schemas/Course"
+          },
+          "courseId": {
             "type": "string",
             "nullable": true
           }
@@ -364,6 +727,210 @@
           "studentId": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Schedule": {
+        "type": "object",
+        "properties": {
+          "scheduleId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "day": {
+            "type": "string",
+            "nullable": true
+          },
+          "start": {
+            "type": "string",
+            "nullable": true
+          },
+          "end": {
+            "type": "string",
+            "nullable": true
+          },
+          "room": {
+            "type": "string",
+            "nullable": true
+          },
+          "instructor": {
+            "$ref": "#/components/schemas/Faculty"
+          },
+          "facultyId": {
+            "type": "string",
+            "nullable": true
+          },
+          "course": {
+            "$ref": "#/components/schemas/Course"
+          },
+          "courseId": {
+            "type": "string",
+            "nullable": true
+          },
+          "courseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "studentCourse": {
+            "$ref": "#/components/schemas/StudentCourse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Student": {
+        "required": [
+          "firstname",
+          "lastname",
+          "middlename",
+          "studentId"
+        ],
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstname": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "middlename": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "lastname": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "sectionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "portalId": {
+            "type": "string",
+            "nullable": true
+          },
+          "evaluations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentInstructorEvaluation"
+            },
+            "nullable": true
+          },
+          "studentCourses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentCourse"
+            },
+            "nullable": true
+          },
+          "program": {
+            "$ref": "#/components/schemas/AcademicProgram"
+          },
+          "programId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentCourse": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "string",
+            "nullable": true
+          },
+          "student": {
+            "$ref": "#/components/schemas/Student"
+          },
+          "courseId": {
+            "type": "string",
+            "nullable": true
+          },
+          "course": {
+            "$ref": "#/components/schemas/Course"
+          },
+          "facultyId": {
+            "type": "string",
+            "nullable": true
+          },
+          "faculty": {
+            "$ref": "#/components/schemas/Faculty"
+          },
+          "scheduleId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "schedule": {
+            "$ref": "#/components/schemas/Schedule"
+          },
+          "prelim": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "midterm": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "final": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "gpa": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentInstructorEvaluation": {
+        "type": "object",
+        "properties": {
+          "evaluationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentId": {
+            "type": "string",
+            "nullable": true
+          },
+          "facultyId": {
+            "type": "string",
+            "nullable": true
+          },
+          "evaluation": {
+            "$ref": "#/components/schemas/Evaluation"
+          },
+          "student": {
+            "$ref": "#/components/schemas/Student"
+          },
+          "faculty": {
+            "$ref": "#/components/schemas/Faculty"
           }
         },
         "additionalProperties": false
