@@ -40,8 +40,18 @@ export class AdminService {
     return this.http.get(this.api + `/admin/faculty-details/${facultyId}`, this.auth.createHttpOptions())
   }
 
-  updateFacultyDetails(faculty : Faculty | undefined){
-    return this.http.put(this.api + `/update-faculty/${faculty?.facultyId}`, faculty, this.auth.createHttpOptions())
+  updateFacultyDetails(facultyId: string, patchDoc: any[]) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+  
+    return this.http.patch(
+      `${this.api}/admin/update-faculty/${facultyId}`,
+      patchDoc,
+      { headers } 
+    );
   }
+  
   
 }

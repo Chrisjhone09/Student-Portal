@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
+using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using serverSide.CommonUtilities;
@@ -119,9 +121,18 @@ namespace serverSide.Controllers
         {
             return Ok(_context.Faculty.Find(id));
         }
-        [HttpPut("update-faculty/{facultyId}")]
-        public IActionResult UpdateFaculty([FromBody] Faculty faculty)
+        [HttpPatch("update-faculty/{facultyId}")]
+        public async Task<IActionResult> UpdateFaculty(string facultyId, [FromBody] JsonPatchDocument<Faculty> patchDoc)
         {
+
+            var faculty = _context.Faculty.Find(facultyId);
+            if (faculty == null)
+            {
+                return NotFound();
+            }
+            patchDoc.ApplyTo(faculty);
+
+            await _context.SaveChangesAsync();
             return Ok();
 
         }

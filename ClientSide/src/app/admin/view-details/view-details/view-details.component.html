@@ -3,7 +3,7 @@
     <h1 class="font-bold text-lg text-white">Faculty Details</h1>
 </div>
 <form (ngSubmit)="save()" action="">
-    <div class="h-full w-full p-5">
+    <div class="h-100 w-full p-5">
         <div class="w-full justify-end flex" (click)="toggleEdit()">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                 class="h-8"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
@@ -39,29 +39,32 @@
                 <input type="text" class="px-2 " [ngClass]="{ 
                     'border border-purple-700 bg-white': isEditing, 
                     'border-transparent': !isEditing 
-                  }" [value]="faculty?.facultyId" [disabled]="!isEditing" />
+                  }" [value]="faculty?.facultyId" disabled [(ngModel)]="faculty.facultyId" [ngModelOptions]="{standalone: true}"/>
     
                 <input type="text" class="px-2 mt-1" [ngClass]="{ 
                     'border border-purple-700 bg-white': isEditing, 
                     'border-transparent': !isEditing 
-                  }" [value]="faculty?.firstName" [disabled]="!isEditing" />
+                  }" [value]="faculty?.firstName" [disabled]="!isEditing" [(ngModel)]="faculty.firstName" [ngModelOptions]="{standalone: true}"/>
     
                 <input type="text" class="px-2 mt-1" [ngClass]="{ 
                     'border border-purple-700 bg-white': isEditing, 
                     'border-transparent': !isEditing 
-                }" [value]="faculty?.middleName" [disabled]="!isEditing" />
+                }" [value]="faculty?.middleName" [disabled]="!isEditing" [(ngModel)]="faculty.middleName" [ngModelOptions]="{standalone: true}"/>
     
                 <input type="text" class="px-2 mt-1" [ngClass]="{ 
                     'border border-purple-700 bg-white': isEditing, 
                     'border-transparent': !isEditing 
-                }" [value]="faculty?.lastName" [disabled]="!isEditing" />
-                <select *ngIf="isEditing == true" name="" id="" class="px-2 mt-1 w-40 border-purple-700 border" >
-                    <option>Instructor</option>
-                    <option>Dean</option>
-                    <option>Registrar</option>
+                }" [value]="faculty?.lastName" [disabled]="!isEditing" [(ngModel)]="faculty.lastName" [ngModelOptions]="{standalone: true}"/>
+                <select *ngIf="isEditing == true" name="" id="" class="px-2 mt-1 w-40 border-purple-700 border" [(ngModel)]="faculty.role" [ngModelOptions]="{standalone: true}">
+                    <option value="Instructor">Instructor</option>
+                    <option value="Dean">Dean</option>
+                    <option value="Registrar">Registrar</option>
                 </select>
             </div>
         </div>
+    </div>
+    <div class="w-full flex justify-end p-5 gap-2" *ngIf="!isEditing">
+        <button class="bg-red-400 h-10 w-20 rounded font-medium" >Delete</button>
     </div>
     <div class="w-full flex justify-end p-5 gap-2" *ngIf="isEditing">
         <button class="bg-red-400 h-10 w-20 rounded font-medium"  (click)="toggleEdit()">Cancel</button>

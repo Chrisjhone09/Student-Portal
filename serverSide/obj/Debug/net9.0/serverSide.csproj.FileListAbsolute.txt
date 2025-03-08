@@ -335,3 +335,6 @@ C:\Users\USER\Personal Project\serverSide\obj\Debug\net9.0\compressed\jvzxetmadu
 C:\Users\USER\Personal Project\serverSide\obj\Debug\net9.0\compressed\xaboo8gpio-eaq64b9tbx.gz
 C:\Users\USER\Personal Project\serverSide\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\USER\Personal Project\serverSide\obj\Debug\net9.0\serverSide.sourcelink.json
+C:\Users\USER\Personal Project\serverSide\bin\Debug\net9.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\USER\Personal Project\serverSide\bin\Debug\net9.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\USER\Personal Project\serverSide\bin\Debug\net9.0\Newtonsoft.Json.Bson.dll

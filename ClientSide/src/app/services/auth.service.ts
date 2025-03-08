@@ -80,6 +80,14 @@ export class AuthService {
       'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
     });
   }
+
+  getTokenPatchMethod(){
+    return new HttpHeaders({
+      'Content-Type': 'application/json-patch+json',
+      'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+    });
+  }
+
   createHttpOptions() {
     return {
       headers: new HttpHeaders({

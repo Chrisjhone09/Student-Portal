@@ -129,18 +129,18 @@
     "ContainingType": "serverSide.Controllers.AdminController",
     "Method": "UpdateFaculty",
     "RelativePath": "api/Admin/update-faculty/{facultyId}",
-    "HttpMethod": "PUT",
+    "HttpMethod": "PATCH",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "faculty",
-        "Type": "serverSide.Models.Faculty",
+        "Name": "facultyId",
+        "Type": "System.String",
         "IsRequired": true
       },
       {
-        "Name": "facultyId",
-        "Type": "",
+        "Name": "patchDoc",
+        "Type": "Microsoft.AspNetCore.JsonPatch.Operations.Operation[]",
         "IsRequired": true
       }
     ],

@@ -23,7 +23,7 @@ namespace serverSide
             builder.Services.AddDbContext<CDKDbContext>(options =>
            options.UseSqlServer(builder.Configuration.GetConnectionString("CDKDatabase")));
             builder.Services.AddControllersWithViews();
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddNewtonsoftJson();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
